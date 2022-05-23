@@ -27,7 +27,7 @@ class SearchController extends Controller
         $request->session()->push('searchStep1', $request->all());
 
         return view('search.step-2', [
-            //
+            'localCity' => $request->local_city
         ]);
     }
 
@@ -50,9 +50,11 @@ class SearchController extends Controller
             'current_location' => 'required'
         ]);
 
-        $location = $request->all()['current_location'];
         $localCity = $request->session()->all()['searchStep1'][array_key_last($request->session()->all()['searchStep1'])]['local_city'];
         $bar = $request->session()->all()['searchStep2'][array_key_last($request->session()->all()['searchStep2'])]['bar'];
+        $location = $request->all()['current_location'];
+
+        dd($localCity);
 
         return view('map', [
             //

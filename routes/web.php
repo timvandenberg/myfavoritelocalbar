@@ -38,4 +38,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('/map', [MapsController::class, 'index'])->name('map');
 
+Route::get('/get-bars/{$location}', [BarController::class, 'getBars'])->name('getBars');
+
 require __DIR__.'/auth.php';

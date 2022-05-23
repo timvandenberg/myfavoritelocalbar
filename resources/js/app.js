@@ -6,8 +6,11 @@ window.Vue = require('vue');
 import Maps from "./components/Maps.vue";
 Vue.component('Maps', Maps);
 
-import Searchbar from "./components/Searchbar.vue";
-Vue.component('Searchbar', Searchbar);
+import SearchbarCity from "./components/SearchbarCity.vue";
+Vue.component('searchbar-city', SearchbarCity);
+
+import SearchbarBar from "./components/SearchbarBar.vue";
+Vue.component('searchbar-bar', SearchbarBar);
 
 const app = new Vue({
     el: '#app',

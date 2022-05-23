@@ -64,8 +64,6 @@ class BarController extends Controller
     {
         $allBars = Bar::where('id', '!=', $bar->id)->get();
 
-
-
         $barConnections = [];
         foreach($bar->connections as $connection) {
             $barC = Bar::where('id', $connection->connected_bar_id)->first();
@@ -149,5 +147,16 @@ class BarController extends Controller
         $bar = Bar::where('id', $allInput['bar_id'])->first();
 
         return $this->show($bar);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Bar  $bar
+     * @return \Illuminate\Http\Response
+     */
+    public function getBars($location)
+    {
+//        $allBars = Bar::where('id', '!=', $bar->id)->get();
     }
 }

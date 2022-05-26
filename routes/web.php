@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\MapsController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PlaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,18 +27,18 @@ Route::post('/search-step-3', [SearchController::class, 'searchStep3'])->name('s
 Route::post('/search-step-4', [SearchController::class, 'searchStep4'])->name('search-step-4-post');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
     Route::resource('/bars', BarController::class);
     Route::post('/bars/connection', [BarController::class, 'connection'])->name('barsConnection');
-    
 });
 
 Route::get('/map', [MapsController::class, 'index'])->name('map');
 
-Route::get('/get-bars/{$location}', [BarController::class, 'getBars'])->name('getBars');
+Route::post('/get-bars', [BarController::class, 'getBars'])->name('getBars');
+
+Route::post('/search/place', [PlaceController::class, 'search']);
 
 require __DIR__.'/auth.php';

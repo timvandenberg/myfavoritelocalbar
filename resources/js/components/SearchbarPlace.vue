@@ -1,24 +1,24 @@
 <template>
   <div>
     <div class="block text-gray-700 text-sm font-bold mb-2">
-      Local Bar
+      Place
     </div>
 
     <vue-typeahead-bootstrap
         class="mb-4"
         v-model="query"
-        :data="bars"
+        :data="places"
         :serializer="item => item.name"
-        :screen-reader-text-serializer="item => `Bar: ${item.name}`"
+        :screen-reader-text-serializer="item => `Place: ${item.name}`"
         highlightClass="special-highlight-class"
-        @hit="selectedbar = $event"
+        @hit="selectedplace = $event"
         :minMatchingChars="3"
-        placeholder="Local bar"
+        placeholder="Search place"
         inputClass="shadow appearance-none border rounded w-full py-2 px-3
           text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-        inputName="bar"
-        :disabledValues="(selectedbar ? [selectedbar.name] : [])"
-        @input="getLocalBars"
+        inputName="place"
+        :disabledValues="(selectedplace ? [selectedplace.name] : [])"
+        @input="getPlaces"
     >
       <template slot="suggestion" slot-scope="{ data, htmlText }">
         <div class="d-flex align-items-center">
@@ -32,39 +32,40 @@
 <script>
 import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
 import {debounce} from 'lodash';
-import axios from 'axios';
 
 export default {
   components: {
     VueTypeaheadBootstrap
   },
-  props: {
-    localcity: String
-  },
   data(){
     return {
       query: '',
-      selectedbar: null,
-      bars: []
+      selectedplace: null,
+      places: []
     }
   },
   methods: {
-    getLocalBars: debounce(function() {
-      console.log('this.localcity: ', this.localcity)
-
-      axios.post('/get-bars', {
-          params: {
-            localcity: this.localcity
-          }
+    getPlaces: debounce(function() {
+      let _this = this
+      axios.post('/search/place', {
+          s: this.query,
         })
         .then(function (response) {
-          // handle success
-          console.log(response);
+          console.log('response', response)
+          _this.places = response.data;
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
-        })
+        });
+    }, 500),
+    getPlacesGoogleMaps: debounce(function() {
+      const service = new google.maps.places.AutocompleteService();
+      service.getPlacePredictions({input: this.query, types: ['(cities)']}, (predictions, status) => {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        } else {
+          this.places = predictions.map((prediction) => ({name: prediction.description, lng: null, lat: null, resultType: 'location', placeId: prediction.place_id}))
+        }
+      });
     }, 500)
   }
 }

@@ -24,16 +24,8 @@
                 <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" autofocus />
             </div>
 
-            <!-- Name -->
             <div>
-                <x-label for="lat" :value="__('Lat')" />
-                <x-input id="lat" class="block mt-1 w-full" type="text" name="lat" :value="old('lat')" required autofocus />
-            </div>
-
-            <!-- Name -->
-            <div>
-                <x-label for="lng" :value="__('Lng')" />
-                <x-input id="lng" class="block mt-1 w-full" type="text" name="lng" :value="old('lng')" required autofocus />
+                <searchbar-place />
             </div>
 
             <div class="flex items-center justify-end mt-4">

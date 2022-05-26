@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bar extends Model
+class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['place_id', 'name', 'description'];
+    protected $fillable = ['name', 'lat', 'lng'];
 
     public function connections()
     {
-        // Has Many Through ??
+        // has many t
         return $this->hasMany(BarConnection::class);
     }
 }

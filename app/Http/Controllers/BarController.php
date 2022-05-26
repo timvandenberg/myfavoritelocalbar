@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bar;
+use App\Models\Place;
 use App\Models\BarConnection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,11 +44,20 @@ class BarController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'lat' => 'required',
-            'lng' => 'required'
+            'place' => 'required',
         ]);
 
+        $place = Place::where('name', $request->place)->first();
+        if (!$place) {
+            $place = new Place;
+            $place->fill([
+                'name' => $request->place
+            ]);
+            $place->save();
+        }
+
         $bar = new Bar;
+        $bar->fill(['place_id' => $place->id]);
         $bar->fill($request->all());
         $bar->save();
 
@@ -67,6 +77,7 @@ class BarController extends Controller
         $barConnections = [];
         foreach($bar->connections as $connection) {
             $barC = Bar::where('id', $connection->connected_bar_id)->first();
+            
             if (array_key_exists($barC->name, $barConnections)) {
                 $similarityTemp = $barConnections[$barC->name];
                 $similarityTemp[] = $connection->similarity;
@@ -155,8 +166,9 @@ class BarController extends Controller
      * @param  \App\Models\Bar  $bar
      * @return \Illuminate\Http\Response
      */
-    public function getBars($location)
+    public function getBars(Request $request)
     {
+        dd($request->all());
 //        $allBars = Bar::where('id', '!=', $bar->id)->get();
     }
 }

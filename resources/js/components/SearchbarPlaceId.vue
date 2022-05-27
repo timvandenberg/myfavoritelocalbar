@@ -13,7 +13,7 @@
         highlightClass="special-highlight-class"
         @hit="selectedplace = $event"
         :minMatchingChars="3"
-        placeholder="Search place"
+        placeholder="Search place by placeID"
         inputClass="shadow appearance-none border rounded w-full py-2 px-3
           text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
         inputName="place"
@@ -46,31 +46,16 @@ export default {
   },
   methods: {
     getPlaces: debounce(function() {
-      let _this = this
-      axios.post('/search/place', {
-          s: this.query,
-        })
-        .then(function (response) {
-          if (response.data.length !== 0) {
-            _this.places = response.data;
-          } else {
-            _this.getPlacesGoogleMaps()
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }, 500),
-    getPlacesGoogleMaps() {
-      const service = new google.maps.places.AutocompleteService();
-      service.getPlacePredictions({input: this.query, types: ['bar','night_club',' restaurant']}, (predictions, status) => {
-        console.log('predictions', predictions)
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+      const service = new google.maps.Geocoder();
+      service.geocode({'placeId': this.query}, (responses, status2) => {
+        console.log('responses: ', responses)
+        if (status2 === 'OK') {
+          // searchResult.lat = responses[0].geometry.location.lat();
+          // searchResult.lng = responses[0].geometry.location.lng();
         } else {
-          this.places = predictions.map((prediction) => ({name: prediction.description, lng: null, lat: null, resultType: 'location', placeId: prediction.place_id}))
         }
       });
-    }
+    }, 500)
   }
 }
 </script>

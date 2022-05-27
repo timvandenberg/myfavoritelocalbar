@@ -12,6 +12,9 @@ Vue.component('searchbar-city', SearchbarCity);
 import SearchbarPlace from "./components/SearchbarPlace.vue";
 Vue.component('searchbar-place', SearchbarPlace);
 
+import SearchbarPlaceId from "./components/SearchbarPlaceId.vue";
+Vue.component('searchbar-place-id', SearchbarPlaceId);
+
 import SearchbarBar from "./components/SearchbarBar.vue";
 Vue.component('searchbar-bar', SearchbarBar);
 

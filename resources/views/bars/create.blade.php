@@ -24,6 +24,14 @@
                 <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" autofocus />
             </div>
 
+                <div>
+                    <p>Dind your place id <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank">here</a></p>
+                </div>
+
+            <div>
+                <searchbar-place-id />
+            </div>
+
             <div>
                 <searchbar-place />
             </div>

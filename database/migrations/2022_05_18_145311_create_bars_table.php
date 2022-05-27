@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('place_id');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->double('lat');
+            $table->double('lng');
             $table->timestamps();
         });
     }

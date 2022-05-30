@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bar;
-use App\Models\Place;
+use App\Models\Town;
 use App\Models\BarConnection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,22 +42,30 @@ class BarController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $request->validate([
+            'google_place_description' => 'required',
+            'google_place_id' => 'required',
             'name' => 'required',
-            'place' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
+            'street_nr' => 'required',
+            'street' => 'required',
+            'town' => 'required',
+            'country' => 'required',
         ]);
 
-        $place = Place::where('name', $request->place)->first();
-        if (!$place) {
-            $place = new Place;
-            $place->fill([
-                'name' => $request->place
+        $town = Town::where('name', $request->town)->first();
+        if (!$town) {
+            $town = new Town;
+            $town->fill([
+                'name' => $request->town
             ]);
-            $place->save();
+            $town->save();
         }
 
         $bar = new Bar;
-        $bar->fill(['place_id' => $place->id]);
+        $bar->fill(['town_id' => $town->id]);
         $bar->fill($request->all());
         $bar->save();
 
@@ -170,5 +178,28 @@ class BarController extends Controller
     {
         dd($request->all());
 //        $allBars = Bar::where('id', '!=', $bar->id)->get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            's' => 'required',
+        ]);
+
+        $bars = Bar::where('google_place_description', 'LIKE', '%'.$request->s.'%')->get();
+        if($bars) {
+            $barsArray = [];
+            foreach ($bars as $b) {
+                $obj = (object) array('description' => $b->google_place_description);
+                array_push($barsArray, $obj);
+            }
+            return response()->json($barsArray);
+        }
+        return response()->json([]);
     }
 }

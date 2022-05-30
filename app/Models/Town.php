@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Place extends Model
+class Town extends Model
 {
     use HasFactory;
 
     protected $fillable = ['name', 'lat', 'lng'];
 
-    public function connections()
+    public function bars()
     {
         // has many t
-        return $this->hasMany(BarConnection::class);
+        return $this->hasMany(Bar::class);
     }
 }

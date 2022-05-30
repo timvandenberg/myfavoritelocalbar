@@ -9,8 +9,8 @@ Vue.component('Maps', Maps);
 import SearchbarCity from "./components/SearchbarCity.vue";
 Vue.component('searchbar-city', SearchbarCity);
 
-import SearchbarPlace from "./components/SearchbarPlace.vue";
-Vue.component('searchbar-place', SearchbarPlace);
+import SearchAddBarForm from "./components/SearchAddBarForm.vue";
+Vue.component('search-add-bar-form', SearchAddBarForm);
 
 import SearchbarPlaceId from "./components/SearchbarPlaceId.vue";
 Vue.component('searchbar-place-id', SearchbarPlaceId);

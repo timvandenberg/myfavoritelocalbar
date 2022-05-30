@@ -9,7 +9,7 @@ class Bar extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['place_id', 'name', 'description'];
+    protected $fillable = ['google_place_description', 'google_place_id', 'town_id', 'name', 'description', 'lat', 'lng'];
 
     public function connections()
     {

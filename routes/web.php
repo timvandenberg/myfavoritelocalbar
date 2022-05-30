@@ -39,6 +39,6 @@ Route::get('/map', [MapsController::class, 'index'])->name('map');
 
 Route::post('/get-bars', [BarController::class, 'getBars'])->name('getBars');
 
-Route::post('/search/place', [PlaceController::class, 'search']);
+Route::post('/search/bar', [BarController::class, 'search']);
 
 require __DIR__.'/auth.php';

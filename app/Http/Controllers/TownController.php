@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Place;
+use App\Models\Town;
 use Illuminate\Http\Request;
 
-class PlaceController extends Controller
+class TownController extends Controller
 {
 
     /**
@@ -19,7 +19,7 @@ class PlaceController extends Controller
             's' => 'required',
         ]);
 
-        $places = Place::where('name', 'LIKE', '%'.$request->s.'%')->get();
+        $places = Town::where('name', 'LIKE', '%'.$request->s.'%')->get();
         if($places) {
             $placesArray = [];
             foreach ($places as $place) {
@@ -55,10 +55,10 @@ class PlaceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Place  $place
+     * @param  \App\Models\Town  $place
      * @return \Illuminate\Http\Response
      */
-    public function show(Place $place)
+    public function show(Town $place)
     {
         //
     }
@@ -66,10 +66,10 @@ class PlaceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Place  $place
+     * @param  \App\Models\Town  $place
      * @return \Illuminate\Http\Response
      */
-    public function edit(Place $place)
+    public function edit(Town $place)
     {
         //
     }
@@ -78,10 +78,10 @@ class PlaceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Place  $place
+     * @param  \App\Models\Town  $place
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Place $place)
+    public function update(Request $request, Town $place)
     {
         //
     }
@@ -89,10 +89,10 @@ class PlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Place  $place
+     * @param  \App\Models\Town  $place
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Place $place)
+    public function destroy(Town $place)
     {
         //
     }

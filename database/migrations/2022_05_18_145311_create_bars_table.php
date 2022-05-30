@@ -15,11 +15,20 @@ return new class extends Migration
     {
         Schema::create('bars', function (Blueprint $table) {
             $table->id();
-            $table->integer('place_id');
+            $table->integer('town_id');
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->text('google_place_description');
+            $table->text('google_place_id');
             $table->double('lat');
             $table->double('lng');
+            $table->string('street');
+            $table->string('street_nr');
+            $table->string('town');
+            $table->string('province');
+            $table->string('country');
+            $table->string('postal_code');
+            $table->text('description')->nullable();
+
             $table->timestamps();
         });
     }
